@@ -5,9 +5,9 @@ import (
 )
 
 type Lexer struct {
-	input        string
+	input string
 	//current index
-	position     int
+	position int
 	//next to the current index
 	readPosition int
 	ch           byte
@@ -37,9 +37,17 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.ch {
 	case '=':
 		if l.peekChar() == '=' {
-			tok = newToken(token.ASSIGN, l.ch)
+			l.readChar()
+			tok = newToken(token.EQ, l.ch+l.peekChar())
 		} else {
-
+			tok = newToken(token.ASSIGN, l.ch)
+		}
+	case '!':
+		if l.peekChar() == '=' {
+			l.readChar()
+			tok = newToken(token.NOT_EQ, l.ch+l.peekChar())
+		} else {
+			tok = newToken(token.BANG, l.ch)
 		}
 	case '+':
 		tok = newToken(token.PLUS, l.ch)
