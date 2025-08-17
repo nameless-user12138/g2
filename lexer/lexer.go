@@ -38,14 +38,14 @@ func (l *Lexer) NextToken() token.Token {
 	case '=':
 		if l.peekChar() == '=' {
 			l.readChar()
-			tok = newToken(token.EQ, l.ch+l.peekChar())
+			tok = newTokenFromStr(token.EQ, string("=="))
 		} else {
 			tok = newToken(token.ASSIGN, l.ch)
 		}
 	case '!':
 		if l.peekChar() == '=' {
 			l.readChar()
-			tok = newToken(token.NOT_EQ, l.ch+l.peekChar())
+			tok = newTokenFromStr(token.NOT_EQ, string("!="))
 		} else {
 			tok = newToken(token.BANG, l.ch)
 		}
@@ -88,6 +88,13 @@ func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{
 		Type:    tokenType,
 		Literal: string(ch),
+	}
+}
+
+func newTokenFromStr(tokenType token.TokenType, str string) token.Token {
+	return token.Token{
+		Type:    tokenType,
+		Literal: str,
 	}
 }
 

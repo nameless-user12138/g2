@@ -38,8 +38,8 @@ const (
 	NOT_EQ = "!="
 
 	//keywords
-	FUNCTION = "FUNCTION"
-	LET      = "LET"
+	FUNCTION = "function"
+	LET      = "let"
 	TRUE     = "true"
 	FALSE    = "false"
 	IF       = "if"
