@@ -1,8 +1,8 @@
 package ast
 
 import (
-	"g2/token"
 	"bytes"
+	"g2/token"
 )
 
 type Node interface {
@@ -66,7 +66,6 @@ func (ls *LetStatement) String() string {
 	return out.String()
 }
 
-
 type Identifier struct {
 	Token token.Token
 	Value string
@@ -74,7 +73,7 @@ type Identifier struct {
 
 func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
-func (i * Identifier) String() string { return i.Value }
+func (i *Identifier) String() string       { return i.Value }
 
 type ReturnStatement struct {
 	Token       token.Token
@@ -84,6 +83,20 @@ type ReturnStatement struct {
 func (r *ReturnStatement) statementNode()       {}
 func (r *ReturnStatement) TokenLiteral() string { return r.Token.Literal }
 
+func (rs *ReturnStatement) String() string {
+	var out bytes.Buffer
+
+	out.WriteString(rs.TokenLiteral() + " ")
+
+	if rs.ReturnValue != nil {
+		out.WriteString(rs.ReturnValue.String())
+	}
+
+	out.WriteString(";")
+
+	return out.String()
+}
+
 type ExpressionStatement struct {
 	//token takes the first token for expression.
 	Token      token.Token
@@ -92,3 +105,10 @@ type ExpressionStatement struct {
 
 func (es *ExpressionStatement) statementNode()       {}
 func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal }
+
+func (es *ExpressionStatement) String() string {
+	if es.Expression != nil {
+		return es.Expression.String()
+	}
+	return ""
+}
